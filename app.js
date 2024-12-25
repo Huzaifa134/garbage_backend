@@ -4,6 +4,8 @@ const connectDB = require('./config/db.config');
 const authRoutes= require('./routes/users.routes');
 const { protect } = require('./middlewares/protected');
 const userRoutes= require('./routes/users.routes');
+const cors = require('cors');
+
 dotenv.config();
 
 const app = express();
