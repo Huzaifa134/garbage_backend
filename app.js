@@ -7,7 +7,11 @@ const userRoutes= require('./routes/users.routes');
 dotenv.config();
 
 const app = express();
-
+app.use(cors({
+    origin: "*", // Replace with the frontend's origin
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
+    credentials: true, // Allow cookies or authentication headers
+  }));
 // Middleware
 app.use(express.json()); // For parsing JSON requests
 
