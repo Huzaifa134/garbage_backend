@@ -46,7 +46,7 @@ const loginUser = async (email, password) => {
     throw new Error('Invalid credentials');
   }
 
-  const token = generateToken(user._id);
+  const token = generateToken(user._id, user.name, user.email, user.password, user.userType, user.organizationName, user.contactPerson, user.location, user.registrationID, user.areasServed, user.typesOfWasteManaged,user.phone,user.score);
   return { user, token };
 };
 
