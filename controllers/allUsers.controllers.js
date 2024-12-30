@@ -40,4 +40,34 @@ const getUsersWithDetails = async (req, res) => {
   }
 };
 
-module.exports = {getAllUsers,getUsersWithDetails};
+
+
+const getSingleUserWithDetails = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract user ID from request parameters
+
+    // Fetch the base user data
+    const user = await User.findById(id).lean();
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Fetch additional details for the user
+    const details = await UserDetails.findOne({ user: id }).lean();
+    const reportWaste = await ReportWaste.find({ user: id }).lean();
+
+    // Combine the data
+    const combinedData = {
+      ...user,
+      details: details || null,
+      reportWaste: reportWaste.length > 0 ? reportWaste : [],
+    };
+
+    res.status(200).json(combinedData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch user with details' });
+  }
+};
+
+module.exports = {getAllUsers,getUsersWithDetails,getSingleUserWithDetails};
