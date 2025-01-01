@@ -32,6 +32,10 @@ const reportWasteSchema= new mongoose.Schema({
     type: String,
     default: 'Pending',
     required:false
+  },
+  view:{
+    type:String,
+    required:false
   }
   });
 
