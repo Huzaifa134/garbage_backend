@@ -2,7 +2,7 @@ const ReportWaste = require('../models/ReportWate.model');
 const upload = require('../middlewares/image_uploader'); // Import the Multer configuration
 const User = require('../models/user.model');
 const createOrUpdateReportWaste = async (req, res) => {
-    const { userId, wasteType, Description, urgencyLevel, Location,status,view } = req.body;
+    const { userId, wasteType, Description, urgencyLevel, Location,status,view,file } = req.body;
   
     try {
       // Find the user to ensure they exist
@@ -12,7 +12,7 @@ const createOrUpdateReportWaste = async (req, res) => {
       }
   
       // Handle image if uploaded
-      const image = req.file ? `/uploads/${req.file.name}` : null;
+      const image =file ? `/uploads/${req.file.name}` : null;
   
       // Create a new report
       const reportWaste = new ReportWaste({
