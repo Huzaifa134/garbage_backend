@@ -12,7 +12,7 @@ const createOrUpdateReportWaste = async (req, res) => {
       }
   
       // Handle image if uploaded
-      const image = req.file ? `/uploads/${req.file.filename}` : null;
+      const image = req.file ? `/uploads/${req.file.name}` : null;
   
       // Create a new report
       const reportWaste = new ReportWaste({
