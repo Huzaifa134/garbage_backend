@@ -2,48 +2,44 @@ const ReportWaste = require('../models/ReportWate.model');
 const upload = require('../middlewares/image_uploader'); // Import the Multer configuration
 const User = require('../models/user.model');
 const createOrUpdateReportWaste = async (req, res) => {
-    const { userId, wasteType, Description, urgencyLevel, Location,status,view } = req.body;
-  
-    try {
-      // Find the user to ensure they exist
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Handle image if uploaded
-      const image = req.file ? `/uploads/${req.file.filename}` : null;
-      console.log("Uploaded File:", req.file); // Check if file is received
+  const { userId, wasteType, Description, urgencyLevel, Location, status, view } = req.body;
 
-  
-      // Create a new report
-      const reportWaste = new ReportWaste({
-        user: userId,
-        wasteType,
-        Description,
-        urgencyLevel,
-        Location,
-        image, // Save the uploaded image
-        status,
-        view
-      });
-  
-      await reportWaste.save();
-  
-      // Add 10 points to the user's score
-      user.score = (user.score || 0) + 10;
-      await user.save();
-  
-      return res.status(201).json({
-        message: 'New waste report successfully created',
-        reportWaste,
-        newScore: user.score,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Failed to create waste report' });
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  };
+
+    // Handle Cloudinary image URL
+    const image = req.file ? req.file.path : null; // req.file.path will contain the Cloudinary URL
+
+    const reportWaste = new ReportWaste({
+      user: userId,
+      wasteType,
+      Description,
+      urgencyLevel,
+      Location,
+      image, // Save the Cloudinary URL
+      status,
+      view,
+    });
+
+    await reportWaste.save();
+
+    user.score = (user.score || 0) + 10;
+    await user.save();
+
+    return res.status(201).json({
+      message: 'New waste report successfully created',
+      reportWaste,
+      newScore: user.score,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to create waste report' });
+  }
+};
+
   
   const updateReportWaste = async (req, res) => {
     const { reportWasteId, wasteType, Description, urgencyLevel, Location, status,view } = req.body;
