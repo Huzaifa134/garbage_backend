@@ -8,7 +8,8 @@ const router = express.Router();
 // router.get('/unread', authMiddleware, async (req, res) => {
 const unRead = async (req, res) => {
   try {
-    const {userId} = req.body;
+    const {userId} = req.query;
+    console.log(userId)
     const notifications = await Notification.find({ userId, isRead: false }).sort({ createdAt: -1 });
     res.status(200).json(notifications);
   } catch (error) {
