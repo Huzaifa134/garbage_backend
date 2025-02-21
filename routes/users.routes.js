@@ -5,6 +5,7 @@ const {getAllUsers,getUsersWithDetails,getSingleUserWithDetails} = require('../c
 const {getUserDetails,createOrUpdateUserDetails,updateUserInfo} = require('../controllers/userDetails.controllers');
 const upload = require('../middlewares/image_uploader'); // Import Multer configuration
 const {createOrUpdateReportWaste,getReportWaste,updateReportWaste }= require('../controllers/userReportWaste.controller');
+const { unRead, markRead } = require('../controllers/userNotification.controllers');
 
 router.post('/register', register);
 router.post('/login', login);
@@ -17,4 +18,6 @@ router.get('/report-waste/:userId', getReportWaste);
 router.put('/report-waste', upload.single('image'), updateReportWaste);
 router.put('/userinfo', updateUserInfo);
 router.get('/user/:id', getSingleUserWithDetails);
+router.get('/unread', unRead);
+router.put('/mark-read' , markRead);
 module.exports = router;

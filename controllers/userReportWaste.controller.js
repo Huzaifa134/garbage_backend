@@ -1,4 +1,5 @@
 const ReportWaste = require('../models/ReportWate.model');
+const Notification = require('../models/notification.modal');
 const upload = require('../middlewares/image_uploader'); // Import the Multer configuration
 const User = require('../models/user.model');
 const createOrUpdateReportWaste = async (req, res) => {
@@ -26,6 +27,13 @@ const createOrUpdateReportWaste = async (req, res) => {
 
     await reportWaste.save();
 
+    // Create a notification for the user
+    const notification = new Notification({
+      userId, // Target user who gets the notification
+      message: `New "${wasteType}" was added!`,
+    });
+    await notification.save();
+
     user.score = (user.score || 0) + 10;
     await user.save();
 
@@ -33,6 +41,7 @@ const createOrUpdateReportWaste = async (req, res) => {
       message: 'New waste report successfully created',
       reportWaste,
       newScore: user.score,
+      notification,
     });
   } catch (error) {
     console.error(error);
