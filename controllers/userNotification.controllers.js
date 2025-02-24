@@ -22,7 +22,7 @@ const unRead = async (req, res) => {
 // router.put('/mark-read', authMiddleware, async (req, res) => {
 const markRead = async (req, res) => {
   try {
-    const {userId} = req.body;
+    const {userId} = req.query;
     await Notification.updateMany({ userId, isRead: false }, { isRead: true });
     res.status(200).json({ message: 'All notifications marked as read' });
   } catch (error) {
