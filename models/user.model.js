@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
   phone:{
     type:String,
     required:true
+  },
+  approve:{
+    type:String,
+    default:"false"
   }
 });
 
