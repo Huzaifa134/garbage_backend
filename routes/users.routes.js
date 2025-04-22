@@ -7,6 +7,7 @@ const upload = require('../middlewares/image_uploader'); // Import Multer config
 const {createOrUpdateReportWaste,getReportWaste,updateReportWaste }= require('../controllers/userReportWaste.controller');
 const { unRead, markRead } = require('../controllers/userNotification.controllers');
 const {adminApprove} = require('../controllers/adminApprove');
+const { forgotPassword, resetPassword } = require('../controllers/forgetPassword.controllers');
 router.post('/register', register);
 router.post('/login', login);
 router.get('/users', getAllUsers);
@@ -21,4 +22,6 @@ router.get('/user/:id', getSingleUserWithDetails);
 router.get('/unread', unRead);
 router.put('/mark-read' , markRead);
 router.put('/approve',adminApprove);
+router.post('/forgot-password',forgotPassword);
+router.post('/reset-password/:token',resetPassword);
 module.exports = router;
