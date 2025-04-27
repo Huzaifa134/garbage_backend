@@ -3,7 +3,7 @@ const Notification = require('../models/notification.modal');
 const upload = require('../middlewares/image_uploader'); // Import the Multer configuration
 const User = require('../models/user.model');
 const createOrUpdateReportWaste = async (req, res) => {
-  const { userId, wasteType, Description, urgencyLevel, Location, status, view } = req.body;
+  const { userId, wasteType, Description, urgencyLevel, Location, status, view , locationText } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -20,6 +20,7 @@ const createOrUpdateReportWaste = async (req, res) => {
       Description,
       urgencyLevel,
       Location,
+      locationText,
       image, // Save the Cloudinary URL
       status,
       view,
@@ -51,7 +52,7 @@ const createOrUpdateReportWaste = async (req, res) => {
 
   
   const updateReportWaste = async (req, res) => {
-    const { reportWasteId, wasteType, Description, urgencyLevel, Location, status,view } = req.body;
+    const { reportWasteId, wasteType, Description, urgencyLevel, Location, status,view ,locationText} = req.body;
   
     try {
       const reportWaste = await ReportWaste.findById(reportWasteId);
@@ -65,6 +66,7 @@ const createOrUpdateReportWaste = async (req, res) => {
       if (Location) reportWaste.Location = Location;
       if (status) reportWaste.status = status;
       if (view) reportWaste.view = view;
+      if(locationText) reportWaste.locationText = locationText;
   
       if (req.file) {
         reportWaste.image = `/uploads/${req.file.filename}`;

@@ -24,6 +24,10 @@ const reportWasteSchema= new mongoose.Schema({
     type: String,
     required:false
   },
+  locationText:{
+    type:String,
+    required:false
+  },
   image:{
     type: String,
     required:false
