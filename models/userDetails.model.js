@@ -33,7 +33,7 @@ const userDetailsSchema = new mongoose.Schema({
     required: false,
   },
   attachments: {
-    type: image,
+    type: String,
     required: false,
   },
 });
