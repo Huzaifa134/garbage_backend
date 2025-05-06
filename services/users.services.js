@@ -1,14 +1,28 @@
-const User = require('../models/user.model');
-const UserDetails = require('../models/userDetails.model');
-const bcrypt = require('bcryptjs');
-const { generateToken } = require('../middlewares/auth');
+const User = require("../models/user.model");
+const UserDetails = require("../models/userDetails.model");
+const bcrypt = require("bcryptjs");
+const { generateToken } = require("../middlewares/auth");
 
 // Register User
-const registerUser = async (name, email, password, userType, organizationName, contactPerson, location, registrationID, areasServed, typesOfWasteManaged,phone,score  ) => {
+const registerUser = async (
+  name,
+  email,
+  password,
+  userType,
+  organizationName,
+  contactPerson,
+  location,
+  registrationID,
+  areasServed,
+  typesOfWasteManaged,
+  phone,
+  score,
+  image
+) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    throw new Error('User already exists');
+    throw new Error("User already exists");
   }
 
   const user = await User.create({
@@ -17,7 +31,7 @@ const registerUser = async (name, email, password, userType, organizationName, c
     password,
     userType,
     phone,
-    score
+    score,
   });
 
   const userDetails = await UserDetails.create({
@@ -28,9 +42,10 @@ const registerUser = async (name, email, password, userType, organizationName, c
     registrationID,
     areasServed,
     typesOfWasteManaged,
-  })
+    attachments: image,
+  });
 
-  return {user, userDetails};
+  return { user, userDetails };
 };
 
 // Login User
@@ -38,12 +53,12 @@ const loginUser = async (email, password) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new Error('Invalid credentials');
+    throw new Error("Invalid credentials");
   }
 
   const isMatch = await user.matchPassword(password);
   if (!isMatch) {
-    throw new Error('Invalid credentials');
+    throw new Error("Invalid credentials");
   }
   const token = generateToken(user);
   return { user, token };

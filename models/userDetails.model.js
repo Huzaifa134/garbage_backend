@@ -1,37 +1,41 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userDetailsSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model
+    ref: "User", // Reference to the User model
     required: true,
   },
   organizationName: {
     type: String,
-    default: '',
-    required:false
+    default: "",
+    required: false,
   },
   contactPerson: {
     type: String,
-    default: '',
-    required:false
+    default: "",
+    required: false,
   },
   Location: {
     type: String,
-    required:false
+    required: false,
   },
-  registrationID:{
+  registrationID: {
     type: String,
-    required:false
+    required: false,
   },
-  areasServed:{
+  areasServed: {
     type: String,
-    required:false
+    required: false,
   },
-  typesofWasteManaged:{
+  typesofWasteManaged: {
     type: String,
-    required:false
-  }
+    required: false,
+  },
+  attachments: {
+    type: image,
+    required: false,
+  },
 });
 
-module.exports = mongoose.model('UserDetails', userDetailsSchema);
+module.exports = mongoose.model("UserDetails", userDetailsSchema);
