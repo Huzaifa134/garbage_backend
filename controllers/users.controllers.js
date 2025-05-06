@@ -17,6 +17,7 @@ const register = async (req, res) => {
     score,
   } = req.body;
   const image = req.file ? req.file.path : null;
+  console.log(image);
   try {
     const { user, userDetails } = await registerUser(
       name,

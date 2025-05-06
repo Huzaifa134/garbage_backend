@@ -26,12 +26,7 @@ const {
   forgotPassword,
   resetPassword,
 } = require("../controllers/forgetPassword.controllers");
-router.post(
-  "/register",
-  upload.single("image"),
-  upload.single("image"),
-  register
-);
+router.post("/register", upload.single("image"), register);
 router.post("/login", login);
 router.get("/users", getAllUsers);
 router.get("/allusersDetails", getUsersWithDetails);
